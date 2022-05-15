@@ -19,7 +19,6 @@ class MainActivity : AppCompatActivity() {
 
     fun initAdapter() {
         val myAdapter = MyAdapter {
-            // apply : 초기화할 때 넣어주는 것이 좋다. 인스턴스를 리턴해주기 때애문
             val intent = Intent(this@MainActivity, DetailActivity::class.java).apply {
                 putExtra("name", it.name) // it = UserData
                 putExtra("introduce", it.introduce)
