@@ -1,13 +1,17 @@
 package org.techtown.myrecycleview
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import org.techtown.myrecycleview.databinding.ItemSampleListBinding
 
-class MyListAdapter : ListAdapter<UserData, RecyclerView.ViewHolder>(homeDiffUtil) {
+class MyListAdapter(
+    private val itemClick: (UserData) -> (Unit)
+) : ListAdapter<UserData, RecyclerView.ViewHolder>(homeDiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return UserDataViewHolder(
@@ -15,7 +19,8 @@ class MyListAdapter : ListAdapter<UserData, RecyclerView.ViewHolder>(homeDiffUti
                 LayoutInflater.from(parent.context),
                 parent,
                 false
-            )
+            ),
+            itemClick
         )
     }
 
@@ -27,6 +32,7 @@ class MyListAdapter : ListAdapter<UserData, RecyclerView.ViewHolder>(homeDiffUti
 
     class UserDataViewHolder(
         private val binding: ItemSampleListBinding,
+        private val itemClick: (UserData) -> (Unit)
     ) :
         RecyclerView.ViewHolder(binding.root) {
 
@@ -34,6 +40,10 @@ class MyListAdapter : ListAdapter<UserData, RecyclerView.ViewHolder>(homeDiffUti
             binding.ivProfile.setImageResource(data.gender)
             binding.tvName.text = data.name
             binding.tvIntroduce.text = data.introduce
+
+            binding.root.setOnClickListener {
+                itemClick(data)
+            }
         }
     }
 
