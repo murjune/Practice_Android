@@ -32,7 +32,7 @@ class MyListAdapter(
 
     class UserDataViewHolder(
         private val binding: ItemSampleListBinding,
-        private val itemClick: (UserData) -> (Unit)
+        private val itemClick: ((UserData) -> (Unit))? = null
     ) :
         RecyclerView.ViewHolder(binding.root) {
 
@@ -42,7 +42,7 @@ class MyListAdapter(
             binding.tvIntroduce.text = data.introduce
 
             binding.root.setOnClickListener {
-                itemClick(data)
+                itemClick?.invoke(data)
             }
         }
     }

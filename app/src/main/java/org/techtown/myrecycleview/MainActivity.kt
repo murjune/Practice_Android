@@ -34,22 +34,21 @@ class MainActivity : AppCompatActivity() {
         )
     }
     fun initAdapter() {
-        userAdapter = MyListAdapter{
-            val intent = Intent(this, DetailActivity::class.java).apply {
-                putExtra("gender", it.gender)
-                putExtra("introduce",it.introduce)
-                putExtra("name",it.name)
-            }
-            startActivity(intent)
-        }
+        userAdapter = MyListAdapter { itemClick(it) }
         binding.rvMyfollower.apply{
             layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.VERTICAL, false)
             adapter = userAdapter
         }
         userAdapter.submitList(userList)
-
     }
-
+    private fun itemClick(data: UserData){
+        val intent = Intent(this, DetailActivity::class.java).apply {
+            putExtra("gender", data.gender)
+            putExtra("introduce",data.introduce)
+            putExtra("name",data.name)
+        }
+        startActivity(intent)
+    }
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
